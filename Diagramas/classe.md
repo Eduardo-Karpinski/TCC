@@ -1,3 +1,4 @@
+```mermaid
 classDiagram
     direction RL
     
@@ -40,3 +41,4 @@ classDiagram
     class Relatorio{
         +gerarRelatorio()
     }
+```
