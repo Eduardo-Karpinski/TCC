@@ -38,7 +38,5 @@ classDiagram
     }
 
     class Relatorio{
-        -Long id
-        -byte[] relatorio
-        -LocalDateTime dataCriacao
+        +gerarRelatorio()
     }
