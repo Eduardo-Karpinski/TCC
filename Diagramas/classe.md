@@ -4,9 +4,8 @@ classDiagram
     
     Produto "1" --> "1" Fornecedor
     Estoque "1" --> "1" Produto
+    Venda "1" --> "*" Produto
 
-    %% Produto tera um fornecedor e não varios, pois o preço pode varias por fornecedor
-    %% isso pode/vai ocasionar em produtos repitidos
     class Produto{
         -Long id
         -String nome
@@ -40,6 +39,12 @@ classDiagram
 
     class Relatorio{
         +gerarRelatorio()
+    }
+
+    class Venda{
+        -Long id
+        -List~Produto~ produtos
+        -LocalDateTime data
     }
 
     class Estado{
