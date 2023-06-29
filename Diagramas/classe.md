@@ -11,7 +11,7 @@ classDiagram
         -Long id
         -String nome
         -String descricao
-        -String unidadeDeMedida
+        -UnidadeDeMedida unidadeDeMedida
         -String ean
         -BigDecimal preco
         -BigDecimal custo
@@ -28,7 +28,7 @@ classDiagram
         -String complemento
         -String bairro
         -String municipio
-        -String estado
+        -Estado estado
     }
 
     class Estoque{
@@ -40,5 +40,42 @@ classDiagram
 
     class Relatorio{
         +gerarRelatorio()
+    }
+
+    class Estado{
+        <<enumeration>>
+        RO
+        AC
+        AM
+        RR
+        PA
+        AP
+        TO
+        MA
+        PI
+        CE
+        RN
+        PB
+        PE
+        AL
+        SE
+        BA
+        MG
+        ES
+        RJ
+        SP
+        PR
+        SC
+        RS
+        MS
+        MT
+        GO
+        DF
+    }
+
+    class UnidadeDeMedida{
+        <<enumeration>>
+        UN
+        KG
     }
 ```
