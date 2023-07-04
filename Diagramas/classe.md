@@ -10,7 +10,7 @@ classDiagram
         -Long id
         -String nome
         -String descricao
-        -UnidadeDeMedida unidadeDeMedida
+        -String unidadeDeMedida
         -String ean
         -BigDecimal preco
         -BigDecimal custo
@@ -27,7 +27,7 @@ classDiagram
         -String complemento
         -String bairro
         -String municipio
-        -Estado estado
+        -String estado
     }
 
     class Estoque{
@@ -45,42 +45,5 @@ classDiagram
         -Long id
         -List~Produto~ produtos
         -LocalDateTime data
-    }
-
-    class Estado{
-        <<enumeration>>
-        RO
-        AC
-        AM
-        RR
-        PA
-        AP
-        TO
-        MA
-        PI
-        CE
-        RN
-        PB
-        PE
-        AL
-        SE
-        BA
-        MG
-        ES
-        RJ
-        SP
-        PR
-        SC
-        RS
-        MS
-        MT
-        GO
-        DF
-    }
-
-    class UnidadeDeMedida{
-        <<enumeration>>
-        UN
-        KG
     }
 ```

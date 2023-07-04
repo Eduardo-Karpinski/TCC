@@ -29,3 +29,6 @@ replay_pid*
 *.project
 *.settings
 *.bin
+**/*.gitignore
+*/bin
+*/.mvn/wrapper/maven-wrapper.properties

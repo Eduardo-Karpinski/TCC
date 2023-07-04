@@ -8,7 +8,7 @@ erDiagram
         Long id
         String nome
         String descricao
-        UnidadeDeMedida unidadeDeMedida
+        String unidadeDeMedida
         String ean
         BigDecimal preco
         BigDecimal custo
@@ -24,7 +24,7 @@ erDiagram
         String complemento
         String bairro
         String municipio
-        Estado estado
+        String estado
     }
     ESTOQUE {
         Long id
