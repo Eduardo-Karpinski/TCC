@@ -8,18 +8,13 @@ import org.springframework.web.bind.annotation.RestControllerAdvice;
 
 @RestControllerAdvice
 public class ExceptionControllerAdvice {
-
 	@ExceptionHandler(MethodArgumentNotValidException.class)
 	@ResponseStatus(value = HttpStatus.BAD_REQUEST)
-	public ExceptionMessage handleInvalidParameterException(MethodArgumentNotValidException ex) {
-		return sendResponse(HttpStatus.BAD_REQUEST, ex);
-	}
-
-	private ExceptionMessage sendResponse(HttpStatus status, MethodArgumentNotValidException ex) {
+	public ExceptionMessage handleInvalidParameterException(MethodArgumentNotValidException e) {
 		return new ExceptionMessage(
-				status.value(),
-				status.getReasonPhrase(),
-				ex.getClass().toString(),
-				ex.getMessage());
+				HttpStatus.BAD_REQUEST.value(),
+				HttpStatus.BAD_REQUEST.getReasonPhrase(),
+				e.getClass().toString(),
+				e.getMessage());
 	}
 }

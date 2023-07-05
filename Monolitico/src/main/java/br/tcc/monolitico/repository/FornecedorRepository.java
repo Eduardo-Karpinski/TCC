@@ -1,9 +1,9 @@
 package br.tcc.monolitico.repository;
 
-import org.springframework.data.repository.CrudRepository;
+import org.springframework.data.jpa.repository.JpaRepository;
 
 import br.tcc.monolitico.domain.Fornecedor;
 
-public interface FornecedorRepository extends CrudRepository<Fornecedor, Long> {
+public interface FornecedorRepository extends JpaRepository<Fornecedor, Long> {
 
 }

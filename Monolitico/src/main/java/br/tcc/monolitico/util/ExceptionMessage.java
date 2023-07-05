@@ -2,6 +2,9 @@ package br.tcc.monolitico.util;
 
 import java.time.LocalDateTime;
 
+import org.springframework.http.HttpStatus;
+import org.springframework.http.ResponseEntity;
+
 public class ExceptionMessage {
 	
 	public LocalDateTime time;
@@ -16,6 +19,15 @@ public class ExceptionMessage {
 		this.error = error;
 		this.exception = exception;
 		this.message = message;
+	}
+	
+	public static ResponseEntity<Object> returnError(HttpStatus httpStatus, Exception e) {
+		ExceptionMessage error = new ExceptionMessage(
+				httpStatus.value(),
+				httpStatus.getReasonPhrase(),
+				e.getClass().toString(),
+				e.getMessage());
+		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
 
 }
