@@ -25,7 +25,7 @@ public class ExceptionMessage {
 		ExceptionMessage error = new ExceptionMessage(
 				httpStatus.value(),
 				httpStatus.getReasonPhrase(),
-				e.getClass().toString(),
+				e.getClass().getSimpleName(),
 				e.getMessage());
 		return new ResponseEntity<>(error, HttpStatus.BAD_REQUEST);
 	}
