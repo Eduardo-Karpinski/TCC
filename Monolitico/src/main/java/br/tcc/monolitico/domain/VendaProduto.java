@@ -12,7 +12,7 @@ import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
 @Entity
-public class Estoque {
+public class VendaProduto {
 
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -20,20 +20,10 @@ public class Estoque {
 	@OneToOne(cascade = CascadeType.REFRESH)
 	private Produto produto;
 	@Column(scale = 2, nullable = false)
-	private BigDecimal Quantidade;
-	@Column(scale = 2, nullable = false)
-	private BigDecimal QuantidadeMinima;
+	private BigDecimal quantidade;
 
-	public Estoque() {
+	public VendaProduto() {
 
-	}
-
-	public Long getId() {
-		return id;
-	}
-
-	public void setId(Long id) {
-		this.id = id;
 	}
 
 	public Produto getProduto() {
@@ -45,24 +35,16 @@ public class Estoque {
 	}
 
 	public BigDecimal getQuantidade() {
-		return Quantidade;
+		return quantidade;
 	}
 
 	public void setQuantidade(BigDecimal quantidade) {
-		Quantidade = quantidade;
-	}
-
-	public BigDecimal getQuantidadeMinima() {
-		return QuantidadeMinima;
-	}
-
-	public void setQuantidadeMinima(BigDecimal quantidadeMinima) {
-		QuantidadeMinima = quantidadeMinima;
+		this.quantidade = quantidade;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Quantidade, QuantidadeMinima, id, produto);
+		return Objects.hash(id, produto, quantidade);
 	}
 
 	@Override
@@ -73,9 +55,9 @@ public class Estoque {
 			return false;
 		if (getClass() != obj.getClass())
 			return false;
-		Estoque other = (Estoque) obj;
-		return Objects.equals(Quantidade, other.Quantidade) && Objects.equals(QuantidadeMinima, other.QuantidadeMinima)
-				&& Objects.equals(id, other.id) && Objects.equals(produto, other.produto);
+		VendaProduto other = (VendaProduto) obj;
+		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto)
+				&& Objects.equals(quantidade, other.quantidade);
 	}
 
 }

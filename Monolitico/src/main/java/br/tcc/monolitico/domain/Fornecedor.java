@@ -14,15 +14,23 @@ public class Fornecedor {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false, length = 100)
 	private String nome;
-	@Column(unique = true)
+	@Column(unique = true, nullable = false, length = 100)
 	private String cnpj;
+	@Column(nullable = false, length = 100)
 	private String telefone;
+	@Column(nullable = false, length = 100)
 	private String cep;
+	@Column(nullable = false, length = 100)
 	private String endereco;
+	@Column(nullable = false, length = 100)
 	private String complemento;
+	@Column(nullable = false, length = 100)
 	private String bairro;
+	@Column(nullable = false, length = 100)
 	private String municipio;
+	@Column(nullable = false, length = 100)
 	private String estado;
 	
 	public Fornecedor() {

@@ -2,7 +2,8 @@
 erDiagram
     PRODUTO }|..|{ FORNECEDOR : "Tem"
     ESTOQUE }|..|{ PRODUTO : "Tem"
-    VENDA }|..|{ PRODUTO : "Tem"
+    VENDA }|..|{ VENDAPRODUTO : "Tem"
+    VENDAPRODUTO }|..|{ PRODUTO : "Tem"
 
     PRODUTO {
         Long id
@@ -34,7 +35,13 @@ erDiagram
     }
     VENDA {
         Long id
-        List~PRODUTO~ produtos
+        List~VENDAPRODUTO~ produtos
+        LocalDateTime data
+        Boolean isFinalizada
+    }
+    VENDAPRODUTO {
+        Long id
+        PRODUTO produto
         LocalDateTime data
     }
 ```

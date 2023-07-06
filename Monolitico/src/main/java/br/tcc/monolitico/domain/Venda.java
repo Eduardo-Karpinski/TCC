@@ -5,6 +5,7 @@ import java.util.List;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -18,11 +19,15 @@ public class Venda {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	@OneToMany(cascade = CascadeType.REFRESH)
-	private List<Produto> produtos;
+	private List<VendaProduto> produtos;
+	@Column(nullable = false)
 	private LocalDateTime data;
+	@Column(nullable = false)
+	private Boolean isFinalizada;
 
 	public Venda() {
-
+		this.data = LocalDateTime.now();
+		this.isFinalizada = false;
 	}
 
 	public Long getId() {
@@ -33,11 +38,11 @@ public class Venda {
 		this.id = id;
 	}
 
-	public List<Produto> getProdutos() {
+	public List<VendaProduto> getProdutos() {
 		return produtos;
 	}
 
-	public void setProdutos(List<Produto> produtos) {
+	public void setProdutos(List<VendaProduto> produtos) {
 		this.produtos = produtos;
 	}
 
@@ -49,9 +54,17 @@ public class Venda {
 		this.data = data;
 	}
 
+	public Boolean getIsFinalizada() {
+		return isFinalizada;
+	}
+
+	public void setIsFinalizada(Boolean isFinalizada) {
+		this.isFinalizada = isFinalizada;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(data, id, produtos);
+		return Objects.hash(data, id, isFinalizada, produtos);
 	}
 
 	@Override
@@ -64,7 +77,7 @@ public class Venda {
 			return false;
 		Venda other = (Venda) obj;
 		return Objects.equals(data, other.data) && Objects.equals(id, other.id)
-				&& Objects.equals(produtos, other.produtos);
+				&& Objects.equals(isFinalizada, other.isFinalizada) && Objects.equals(produtos, other.produtos);
 	}
 
 }

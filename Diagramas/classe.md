@@ -4,7 +4,8 @@ classDiagram
     
     Produto "1" --> "1" Fornecedor
     Estoque "1" --> "1" Produto
-    Venda "1" --> "*" Produto
+    Venda "1" --> "*" VendaProduto
+    VendaProduto "1" --> "1" Produto
 
     class Produto{
         -Long id
@@ -37,13 +38,17 @@ classDiagram
         -BigDecimal QuantidadeMinima
     }
 
-    class Relatorio{
-        +gerarRelatorio()
-    }
-
     class Venda{
         -Long id
-        -List~Produto~ produtos
+        -List~VendaProduto~ produtos
         -LocalDateTime data
+        -Boolean isFinalizada
     }
+
+    class VendaProduto{
+        -Long id
+        -Produto produto
+        -BigDecimal quantidade
+    }
+
 ```

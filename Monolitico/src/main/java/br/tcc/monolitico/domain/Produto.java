@@ -4,6 +4,7 @@ import java.math.BigDecimal;
 import java.util.Objects;
 
 import jakarta.persistence.CascadeType;
+import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
@@ -16,11 +17,17 @@ public class Produto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
+	@Column(nullable = false, length = 100)
 	private String nome;
+	@Column(nullable = false, length = 100)
 	private String descricao;
+	@Column(nullable = false, length = 100)
 	private String unidadeDeMedida;
+	@Column(unique = true, nullable = false, length = 15)
 	private String ean;
+	@Column(scale = 2, nullable = false)
 	private BigDecimal preco;
+	@Column(scale = 2, nullable = false)
 	private BigDecimal custo;
 	@OneToOne(cascade = CascadeType.REFRESH)
 	private Fornecedor fornecedor;
