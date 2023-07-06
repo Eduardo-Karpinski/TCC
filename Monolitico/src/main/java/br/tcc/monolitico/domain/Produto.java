@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class Produto {
@@ -29,7 +29,7 @@ public class Produto {
 	private BigDecimal preco;
 	@Column(scale = 2, nullable = false)
 	private BigDecimal custo;
-	@OneToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	private Fornecedor fornecedor;
 
 	public Produto() {
