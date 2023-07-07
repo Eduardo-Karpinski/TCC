@@ -22,6 +22,11 @@ public class ExceptionMessage {
 	}
 	
 	public static ResponseEntity<Object> returnError(HttpStatus httpStatus, Exception e) {
+		
+		if (HttpStatus.INTERNAL_SERVER_ERROR == httpStatus) {
+			e.printStackTrace();
+		}
+		
 		ExceptionMessage error = new ExceptionMessage(
 				httpStatus.value(),
 				httpStatus.getReasonPhrase(),

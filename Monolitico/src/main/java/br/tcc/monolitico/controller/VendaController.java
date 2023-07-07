@@ -24,6 +24,16 @@ public class VendaController {
 		this.vendaService = vendaService;
 	}
 	
+	@PostMapping("/finaliza/{id}")
+	public ResponseEntity<Object> finaliza(@PathVariable final Long id) {
+		return vendaService.finaliza(id);
+	}
+	
+	@DeleteMapping("/produto/{idVenda}/{idProduto}")
+	public ResponseEntity<Object> removeProduto(@PathVariable final Long idVenda, @PathVariable final Long idProduto) {
+		return vendaService.removeProduto(idVenda, idProduto);
+	}
+	
 	@PostMapping("{idVenda}/{idProduto}/{quantidade}")
 	public ResponseEntity<Object> addProduto(@PathVariable final Long idVenda, @PathVariable final Long idProduto, @PathVariable final BigDecimal quantidade) {
 		return vendaService.addProduto(idVenda, idProduto, quantidade);

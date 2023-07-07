@@ -80,4 +80,9 @@ public class Venda {
 				&& Objects.equals(isFinalizada, other.isFinalizada) && Objects.equals(produtos, other.produtos);
 	}
 
+	@Override
+	public String toString() {
+		return "Venda [id=" + id + ", produtos=" + produtos + ", data=" + data + ", isFinalizada=" + isFinalizada + "]";
+	}
+
 }

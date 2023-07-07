@@ -8,5 +8,5 @@ import jakarta.validation.constraints.NotNull;
 public record EstoqueRecord(
 		Long id,
 		@NotNull Long idProduto,
-		@NotNull @DecimalMin(value = "0.0", inclusive = false) BigDecimal Quantidade,
-		@NotNull @DecimalMin(value = "0.0", inclusive = false) BigDecimal QuantidadeMinima) {}
+		@NotNull @DecimalMin(value = "0.0", inclusive = false) BigDecimal quantidade,
+		@NotNull @DecimalMin(value = "0.0", inclusive = false) BigDecimal quantidadeMinima) {}

@@ -10,8 +10,8 @@ public class EstoqueMapper {
 		Estoque estoque = new Estoque();
 		estoque.setId(id);
 		estoque.setProduto(produto);
-		estoque.setQuantidade(input.Quantidade());
-		estoque.setQuantidadeMinima(input.QuantidadeMinima());
+		estoque.setQuantidade(input.quantidade());
+		estoque.setQuantidadeMinima(input.quantidadeMinima());
 		return estoque;
 	}
 

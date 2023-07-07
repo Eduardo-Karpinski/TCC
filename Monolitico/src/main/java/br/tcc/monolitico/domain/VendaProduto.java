@@ -9,7 +9,7 @@ import jakarta.persistence.Entity;
 import jakarta.persistence.GeneratedValue;
 import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
-import jakarta.persistence.OneToOne;
+import jakarta.persistence.ManyToOne;
 
 @Entity
 public class VendaProduto {
@@ -17,7 +17,7 @@ public class VendaProduto {
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
-	@OneToOne(cascade = CascadeType.REFRESH)
+	@ManyToOne(cascade = CascadeType.REFRESH)
 	private Produto produto;
 	@Column(scale = 2, nullable = false)
 	private BigDecimal quantidade;
@@ -25,7 +25,7 @@ public class VendaProduto {
 	public VendaProduto() {
 
 	}
-
+	
 	public Produto getProduto() {
 		return produto;
 	}
@@ -58,6 +58,11 @@ public class VendaProduto {
 		VendaProduto other = (VendaProduto) obj;
 		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto)
 				&& Objects.equals(quantidade, other.quantidade);
+	}
+
+	@Override
+	public String toString() {
+		return "VendaProduto [id=" + id + ", produto=" + produto + ", quantidade=" + quantidade + "]";
 	}
 
 }

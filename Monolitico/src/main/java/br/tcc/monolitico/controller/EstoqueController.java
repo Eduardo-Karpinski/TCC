@@ -3,10 +3,8 @@ package br.tcc.monolitico.controller;
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
-import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.PutMapping;
 import org.springframework.web.bind.annotation.RequestBody;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -36,19 +34,9 @@ public class EstoqueController {
 		return estoqueService.get(page);
 	}
 	
-	@DeleteMapping("{id}")
-	public ResponseEntity<Object> delete(@PathVariable final Long id) {
-		return estoqueService.delete(id);
-	}
-	
 	@PutMapping("{id}")
 	public ResponseEntity<Object> update(@PathVariable final Long id, @RequestBody @Valid final EstoqueRecord dto) {
 		return estoqueService.update(id, dto);
-	}
-	
-	@PostMapping
-	public ResponseEntity<Object> save(@RequestBody @Valid final EstoqueRecord dto) {
-		return estoqueService.save(dto);
 	}
 	
 }

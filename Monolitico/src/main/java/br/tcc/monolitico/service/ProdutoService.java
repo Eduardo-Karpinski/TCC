@@ -1,5 +1,6 @@
 package br.tcc.monolitico.service;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -11,10 +12,12 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.tcc.monolitico.domain.Estoque;
 import br.tcc.monolitico.domain.Fornecedor;
 import br.tcc.monolitico.domain.Produto;
 import br.tcc.monolitico.mapper.ProdutoMapper;
 import br.tcc.monolitico.record.ProdutoRecord;
+import br.tcc.monolitico.repository.EstoqueRepository;
 import br.tcc.monolitico.repository.FornecedorRepository;
 import br.tcc.monolitico.repository.ProdutoRepository;
 import br.tcc.monolitico.util.ExceptionMessage;
@@ -24,10 +27,12 @@ public class ProdutoService {
 	
 	public final ProdutoRepository produtoRepository;
 	public final FornecedorRepository fornecedorRepository;
+	public final EstoqueRepository estoqueRepository;
 	
-	public ProdutoService(ProdutoRepository produtoRepository, FornecedorRepository fornecedorRepository) {
+	public ProdutoService(ProdutoRepository produtoRepository, FornecedorRepository fornecedorRepository, EstoqueRepository estoqueRepository) {
 		this.produtoRepository = produtoRepository;
 		this.fornecedorRepository = fornecedorRepository;
+		this.estoqueRepository = estoqueRepository;
 	}
 	
 	public ResponseEntity<Object> getById(final Long id) {
@@ -98,6 +103,13 @@ public class ProdutoService {
 			if (fornecedorOptional.isPresent()) {
 				Produto produto = ProdutoMapper.input(null, dto, fornecedorOptional.get());
 				produtoRepository.save(produto);
+				
+				Estoque estoque = new Estoque();
+				estoque.setProduto(produto);
+				estoque.setQuantidade(BigDecimal.ZERO);
+				estoque.setQuantidadeMinima(BigDecimal.ZERO);
+				estoqueRepository.save(estoque);
+				
 				return new ResponseEntity<>(HttpStatus.OK);
 			}
 			

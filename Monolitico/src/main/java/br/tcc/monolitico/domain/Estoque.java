@@ -11,6 +11,9 @@ import jakarta.persistence.GenerationType;
 import jakarta.persistence.Id;
 import jakarta.persistence.OneToOne;
 
+/**
+ * 
+ */
 @Entity
 public class Estoque {
 
@@ -20,9 +23,9 @@ public class Estoque {
 	@OneToOne(cascade = CascadeType.REFRESH)
 	private Produto produto;
 	@Column(scale = 2, nullable = false)
-	private BigDecimal Quantidade;
+	private BigDecimal quantidade;
 	@Column(scale = 2, nullable = false)
-	private BigDecimal QuantidadeMinima;
+	private BigDecimal quantidadeMinima;
 
 	public Estoque() {
 
@@ -45,24 +48,24 @@ public class Estoque {
 	}
 
 	public BigDecimal getQuantidade() {
-		return Quantidade;
+		return quantidade;
 	}
 
 	public void setQuantidade(BigDecimal quantidade) {
-		Quantidade = quantidade;
+		this.quantidade = quantidade;
 	}
 
 	public BigDecimal getQuantidadeMinima() {
-		return QuantidadeMinima;
+		return quantidadeMinima;
 	}
 
 	public void setQuantidadeMinima(BigDecimal quantidadeMinima) {
-		QuantidadeMinima = quantidadeMinima;
+		this.quantidadeMinima = quantidadeMinima;
 	}
 
 	@Override
 	public int hashCode() {
-		return Objects.hash(Quantidade, QuantidadeMinima, id, produto);
+		return Objects.hash(id, produto, quantidade, quantidadeMinima);
 	}
 
 	@Override
@@ -74,8 +77,15 @@ public class Estoque {
 		if (getClass() != obj.getClass())
 			return false;
 		Estoque other = (Estoque) obj;
-		return Objects.equals(Quantidade, other.Quantidade) && Objects.equals(QuantidadeMinima, other.QuantidadeMinima)
-				&& Objects.equals(id, other.id) && Objects.equals(produto, other.produto);
+		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto)
+				&& Objects.equals(quantidade, other.quantidade)
+				&& Objects.equals(quantidadeMinima, other.quantidadeMinima);
+	}
+
+	@Override
+	public String toString() {
+		return "Estoque [id=" + id + ", produto=" + produto + ", quantidade=" + quantidade + ", quantidadeMinima="
+				+ quantidadeMinima + "]";
 	}
 
 }

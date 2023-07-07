@@ -58,15 +58,6 @@ public class EstoqueService {
 		}
 	}
 	
-	public ResponseEntity<Object> delete(final Long id) {
-		try {
-			estoqueRepository.deleteById(id);
-			return new ResponseEntity<>(HttpStatus.OK);
-		} catch (Exception e) {
-			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-		}
-	}
-	
 	public ResponseEntity<Object> update(final Long id, final EstoqueRecord dto) {
 		try {
 			Optional<Produto> produtoOptional = produtoRepository.findById(dto.idProduto());
@@ -85,23 +76,6 @@ public class EstoqueService {
 			Estoque estoque = EstoqueMapper.input(id, dto, produtoOptional.get());
 			estoqueRepository.save(estoque);
 			return new ResponseEntity<>(HttpStatus.OK);			
-		} catch (Exception e) {
-			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
-		}
-	}
-	
-	public ResponseEntity<Object> save(final EstoqueRecord dto) {
-		try {
-			Optional<Produto> produtoOptional = produtoRepository.findById(dto.idProduto());
-			
-			if (produtoOptional.isEmpty()) {
-				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
-						new NoSuchElementException("No such Produto found"));
-			}
-			
-			Estoque estoque = EstoqueMapper.input(null, dto, produtoOptional.get());
-			estoqueRepository.save(estoque);
-			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
 		}

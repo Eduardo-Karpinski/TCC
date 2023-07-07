@@ -120,4 +120,11 @@ public class Produto {
 				&& Objects.equals(preco, other.preco) && Objects.equals(unidadeDeMedida, other.unidadeDeMedida);
 	}
 
+	@Override
+	public String toString() {
+		return "Produto [id=" + id + ", nome=" + nome + ", descricao=" + descricao + ", unidadeDeMedida="
+				+ unidadeDeMedida + ", ean=" + ean + ", preco=" + preco + ", custo=" + custo + ", fornecedor="
+				+ fornecedor + "]";
+	}
+
 }

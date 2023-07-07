@@ -12,11 +12,13 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
+import br.tcc.monolitico.domain.Estoque;
 import br.tcc.monolitico.domain.Produto;
 import br.tcc.monolitico.domain.Venda;
 import br.tcc.monolitico.domain.VendaProduto;
 import br.tcc.monolitico.mapper.VendaMapper;
 import br.tcc.monolitico.record.VendaRecord;
+import br.tcc.monolitico.repository.EstoqueRepository;
 import br.tcc.monolitico.repository.ProdutoRepository;
 import br.tcc.monolitico.repository.VendaProdutoRepository;
 import br.tcc.monolitico.repository.VendaRepository;
@@ -28,14 +30,66 @@ public class VendaService {
 	public final VendaRepository vendaRepository;
 	public final ProdutoRepository produtoRepository;
 	public final VendaProdutoRepository vendaProdutoRepository;
+	public final EstoqueRepository estoqueRepository;
 	
-	public VendaService(VendaRepository vendaRepository, ProdutoRepository produtoRepository, VendaProdutoRepository vendaProdutoRepository) {
+	public VendaService(VendaRepository vendaRepository, ProdutoRepository produtoRepository, VendaProdutoRepository vendaProdutoRepository, EstoqueRepository estoqueRepository) {
 		this.vendaRepository = vendaRepository;
 		this.produtoRepository = produtoRepository;
 		this.vendaProdutoRepository = vendaProdutoRepository;
+		this.estoqueRepository = estoqueRepository;
 	}
 	
-	//public ResponseEntity<Object> removeProduto(Long idVenda, Long idProduto) {}
+	public ResponseEntity<Object> finaliza(final Long id) {
+		try {
+			Optional<Venda> vendaOptional = vendaRepository.findById(id);
+
+			if (vendaOptional.isEmpty()) {
+				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
+						new NoSuchElementException("No such Venda found"));
+			}
+			
+			vendaOptional.get().setIsFinalizada(true);
+			vendaRepository.save(vendaOptional.get());
+			
+			vendaOptional.get().getProdutos().forEach(p -> {
+				Optional<Estoque> estoqueOptional = estoqueRepository.findByProduto(p.getProduto());
+				if (estoqueOptional.isPresent()) {
+					estoqueOptional.get().setQuantidade(estoqueOptional.get().getQuantidade().subtract(p.getQuantidade()));
+					estoqueRepository.save(estoqueOptional.get());
+				}
+			});
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
+	
+	public ResponseEntity<Object> removeProduto(final Long idVenda, final Long idProduto) {
+		try {
+			
+			Optional<Venda> vendaOptional = vendaRepository.findById(idVenda);
+			Optional<VendaProduto> vendaProdutoOptional = vendaProdutoRepository.findById(idProduto);
+			
+			if (vendaOptional.isEmpty()) {
+				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
+						new NoSuchElementException("No such Venda found"));
+			}
+			
+			if (vendaProdutoOptional.isEmpty()) {
+				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
+						new NoSuchElementException("No such Produto found"));
+			}
+			
+			vendaOptional.get().getProdutos().remove(vendaProdutoOptional.get());
+			vendaRepository.save(vendaOptional.get());
+			vendaProdutoRepository.delete(vendaProdutoOptional.get());
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
 	
 	public ResponseEntity<Object> addProduto(final Long idVenda, final Long idProduto, final BigDecimal quantidade) {
 		try {
@@ -52,21 +106,12 @@ public class VendaService {
 						new NoSuchElementException("No such Produto found"));
 			}
 			
-			Optional<VendaProduto> vendaProdutoOptional = vendaProdutoRepository.findByProduto(produtoOptional.get());
-			
-			if (vendaProdutoOptional.isEmpty()) {
-				VendaProduto produto = new VendaProduto();
-				produto.setProduto(produtoOptional.get());
-				produto.setQuantidade(quantidade);
-				vendaProdutoRepository.save(produto);
-				vendaOptional.get().getProdutos().add(produto);
-				vendaRepository.save(vendaOptional.get());
-			} else {
-				VendaProduto produto = vendaProdutoOptional.get();
-				produto.setProduto(produtoOptional.get());
-				produto.setQuantidade(produto.getQuantidade().add(quantidade));
-				vendaProdutoRepository.save(produto);
-			}
+			VendaProduto produto = new VendaProduto();
+			produto.setProduto(produtoOptional.get());
+			produto.setQuantidade(quantidade);
+			vendaProdutoRepository.save(produto);
+			vendaOptional.get().getProdutos().add(produto);
+			vendaRepository.save(vendaOptional.get());
 			
 			return new ResponseEntity<>(HttpStatus.OK);
 		} catch (Exception e) {

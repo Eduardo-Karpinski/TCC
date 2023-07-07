@@ -32,7 +32,7 @@ public class Fornecedor {
 	private String municipio;
 	@Column(nullable = false, length = 100)
 	private String estado;
-	
+
 	public Fornecedor() {
 
 	}
@@ -137,5 +137,12 @@ public class Fornecedor {
 				&& Objects.equals(id, other.id) && Objects.equals(municipio, other.municipio)
 				&& Objects.equals(nome, other.nome) && Objects.equals(telefone, other.telefone);
 	}
-	
+
+	@Override
+	public String toString() {
+		return "Fornecedor [id=" + id + ", nome=" + nome + ", cnpj=" + cnpj + ", telefone=" + telefone + ", cep=" + cep
+				+ ", endereco=" + endereco + ", complemento=" + complemento + ", bairro=" + bairro + ", municipio="
+				+ municipio + ", estado=" + estado + "]";
+	}
+
 }
