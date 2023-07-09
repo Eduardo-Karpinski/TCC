@@ -13,9 +13,11 @@ import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
 import br.tcc.monolitico.domain.Estoque;
+import br.tcc.monolitico.domain.Produto;
 import br.tcc.monolitico.domain.Venda;
 import br.tcc.monolitico.domain.VendaProduto;
 import br.tcc.monolitico.repository.EstoqueRepository;
+import br.tcc.monolitico.repository.ProdutoRepository;
 import br.tcc.monolitico.repository.VendaRepository;
 import br.tcc.monolitico.util.ExceptionMessage;
 
@@ -24,10 +26,12 @@ public class RelatorioService {
 
 	public EstoqueRepository estoqueRepository;
 	public VendaRepository vendaRepository;
-
-	public RelatorioService(EstoqueRepository estoqueRepository, VendaRepository vendaRepository) {
+	public ProdutoRepository produtoRepository;
+	
+	public RelatorioService(EstoqueRepository estoqueRepository, VendaRepository vendaRepository, ProdutoRepository produtoRepository) {
 		this.estoqueRepository = estoqueRepository;
 		this.vendaRepository = vendaRepository;
+		this.produtoRepository = produtoRepository;
 	}
 	
 	@SuppressWarnings("unchecked")
@@ -36,6 +40,7 @@ public class RelatorioService {
 			JSONObject json = new JSONObject();
 			Optional<List<Venda>> vendaOptional = vendaRepository.findAllByIsFinalizadaTrueAndDataBetween(data1, data2);
 			Optional<List<Estoque>> estoqueOptional = estoqueRepository.findAllEstoqueBaixos();
+			Optional<List<Produto>> produtoOptional = produtoRepository.getAllByValorBaixo();
 			
 			if (vendaOptional.isPresent()) {
 				json.put("Total de vendas", vendaOptional.get().stream().count());
@@ -61,6 +66,18 @@ public class RelatorioService {
 					estoquesBaixos.add(estoqueJson);
 				});
 				json.put("estoques baixos", estoquesBaixos);
+			}
+			
+			if (produtoOptional.isPresent()) {
+				JSONArray estoquesBaixos = new JSONArray();
+				produtoOptional.get().forEach(produto -> {
+					JSONObject produtoJson = new JSONObject();
+					produtoJson.put("Produto", produto.getDescricao() + " ("+produto.getEan()+")");
+					produtoJson.put("Preço", produto.getPreco());
+					produtoJson.put("Custo", produto.getCusto());
+					estoquesBaixos.add(produtoJson);
+				});
+				json.put("Produto com preço baixo", estoquesBaixos);
 			}
 			
 			return new ResponseEntity<>(json, HttpStatus.OK);
