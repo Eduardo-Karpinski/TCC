@@ -109,6 +109,7 @@ public class VendaService {
 			VendaProduto produto = new VendaProduto();
 			produto.setProduto(produtoOptional.get());
 			produto.setQuantidade(quantidade);
+			produto.setPreco(produtoOptional.get().getPreco());
 			vendaProdutoRepository.save(produto);
 			vendaOptional.get().getProdutos().add(produto);
 			vendaRepository.save(vendaOptional.get());

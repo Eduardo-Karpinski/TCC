@@ -43,13 +43,13 @@ public class RelatorioService {
 			Optional<List<Produto>> produtoOptional = produtoRepository.getAllByValorBaixo();
 			
 			if (vendaOptional.isPresent()) {
-				json.put("Total de vendas", vendaOptional.get().stream().count());
-				json.put("Valor Vendido", NumberFormat.getCurrencyInstance().format(vendaOptional.get().stream()
+				json.put("totalDeVendas", vendaOptional.get().stream().count());
+				json.put("valorVendido", NumberFormat.getCurrencyInstance().format(vendaOptional.get().stream()
 						.map(Venda::getProdutos)
 						.flatMap(produtos -> produtos.stream())
-						.map(produto -> produto.getProduto().getPreco().multiply(produto.getQuantidade()))
+						.map(produto -> produto.getPreco().multiply(produto.getQuantidade()))
 						.reduce(BigDecimal.ZERO, BigDecimal::add)));
-				json.put("Quantidade de produtos vendidos", vendaOptional.get().stream()
+				json.put("quantidadeDeProdutosVendidos", vendaOptional.get().stream()
 						.map(Venda::getProdutos)
 						.flatMap(produtos -> produtos.stream())
 						.map(VendaProduto::getQuantidade)
@@ -65,7 +65,7 @@ public class RelatorioService {
 					estoqueJson.put("quantidadeMinima", estoque.getQuantidadeMinima());
 					estoquesBaixos.add(estoqueJson);
 				});
-				json.put("estoques baixos", estoquesBaixos);
+				json.put("estoquesBaixos", estoquesBaixos);
 			}
 			
 			if (produtoOptional.isPresent()) {
@@ -77,7 +77,7 @@ public class RelatorioService {
 					produtoJson.put("Custo", produto.getCusto());
 					estoquesBaixos.add(produtoJson);
 				});
-				json.put("Produto com preço baixo", estoquesBaixos);
+				json.put("ProdutoComPreçoBaixo", estoquesBaixos);
 			}
 			
 			return new ResponseEntity<>(json, HttpStatus.OK);

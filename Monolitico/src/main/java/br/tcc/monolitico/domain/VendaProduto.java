@@ -21,11 +21,21 @@ public class VendaProduto {
 	private Produto produto;
 	@Column(scale = 2, nullable = false)
 	private BigDecimal quantidade;
+	@Column(scale = 2, nullable = false)
+	private BigDecimal preco;
 
 	public VendaProduto() {
 
 	}
-	
+
+	public Long getId() {
+		return id;
+	}
+
+	public void setId(Long id) {
+		this.id = id;
+	}
+
 	public Produto getProduto() {
 		return produto;
 	}
@@ -42,9 +52,17 @@ public class VendaProduto {
 		this.quantidade = quantidade;
 	}
 
+	public BigDecimal getPreco() {
+		return preco;
+	}
+
+	public void setPreco(BigDecimal preco) {
+		this.preco = preco;
+	}
+
 	@Override
 	public int hashCode() {
-		return Objects.hash(id, produto, quantidade);
+		return Objects.hash(id, preco, produto, quantidade);
 	}
 
 	@Override
@@ -56,13 +74,14 @@ public class VendaProduto {
 		if (getClass() != obj.getClass())
 			return false;
 		VendaProduto other = (VendaProduto) obj;
-		return Objects.equals(id, other.id) && Objects.equals(produto, other.produto)
-				&& Objects.equals(quantidade, other.quantidade);
+		return Objects.equals(id, other.id) && Objects.equals(preco, other.preco)
+				&& Objects.equals(produto, other.produto) && Objects.equals(quantidade, other.quantidade);
 	}
 
 	@Override
 	public String toString() {
-		return "VendaProduto [id=" + id + ", produto=" + produto + ", quantidade=" + quantidade + "]";
+		return "VendaProduto [id=" + id + ", produto=" + produto + ", quantidade=" + quantidade + ", preco=" + preco
+				+ "]";
 	}
 
 }
