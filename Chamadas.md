@@ -18,3 +18,22 @@ Exemplo do body
     "estado": "teste"
 }
 ```
+
+# Produto
+### http://localhost:8080/produto (POST)
+### http://localhost:8080/produto/{id} (PUT)
+### http://localhost:8080/produto/{id} (DELETE)
+### http://localhost:8080/produto?page=0&size=10&sort=id,ASC (GET)
+### http://localhost:8080/produto/{id} (GET)
+```
+Exemplo do body
+{
+    "nome": "teste",
+    "descricao": "teste",
+    "unidadeDeMedida": "teste",
+    "ean": "teste",
+    "preco": 8.00,
+    "custo": 5.00,
+    "idFornecedor": 4
+}
+```
