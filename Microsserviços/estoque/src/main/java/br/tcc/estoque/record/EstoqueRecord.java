@@ -1,4 +1,4 @@
-package br.tcc.monolitico.record;
+package br.tcc.estoque.record;
 
 import java.math.BigDecimal;
 

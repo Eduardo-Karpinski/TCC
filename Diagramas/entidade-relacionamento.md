@@ -42,6 +42,7 @@ erDiagram
     VENDAPRODUTO {
         Long id
         PRODUTO produto
-        LocalDateTime data
+        -BigDecimal quantidade
+        -BigDecimal preco
     }
 ```

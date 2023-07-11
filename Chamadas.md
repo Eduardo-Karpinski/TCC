@@ -34,6 +34,19 @@ Exemplo do body
     "ean": "teste",
     "preco": 8.00,
     "custo": 5.00,
-    "idFornecedor": 4
+    "idFornecedor": 1
+}
+```
+
+# Estoque
+### http://localhost:8080/estoque/{id} (PUT)
+### http://localhost:8080/estoque?page=0&size=10&sort=id,ASC (GET)
+### http://localhost:8080/estoque/{id} (GET)
+```
+Exemplo do body
+{
+   "idProduto": 1,
+    "quantidade": 10,
+    "quantidadeMinima": 5
 }
 ```

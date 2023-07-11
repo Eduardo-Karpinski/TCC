@@ -1,5 +1,6 @@
 package br.tcc.produto.service;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -13,8 +14,10 @@ import org.springframework.stereotype.Service;
 
 import br.tcc.produto.domain.Fornecedor;
 import br.tcc.produto.domain.Produto;
+import br.tcc.produto.feign.EstoqueFeign;
 import br.tcc.produto.feign.FornecedorFeign;
 import br.tcc.produto.mapper.ProdutoMapper;
+import br.tcc.produto.record.EstoqueRecord;
 import br.tcc.produto.record.ProdutoRecord;
 import br.tcc.produto.repository.ProdutoRepository;
 import br.tcc.produto.util.ExceptionMessage;
@@ -24,10 +27,12 @@ public class ProdutoService {
 	
 	public final ProdutoRepository produtoRepository;
 	public final FornecedorFeign fornecedorFeign;
+	public final EstoqueFeign estoqueFeign;
 	
-	public ProdutoService(ProdutoRepository produtoRepository, FornecedorFeign fornecedorFeign) {
+	public ProdutoService(ProdutoRepository produtoRepository, FornecedorFeign fornecedorFeign, EstoqueFeign estoqueFeign) {
 		this.produtoRepository = produtoRepository;
 		this.fornecedorFeign = fornecedorFeign;
+		this.estoqueFeign = estoqueFeign;
 	}
 	
 	public ResponseEntity<Object> getById(final Long id) {
@@ -99,7 +104,7 @@ public class ProdutoService {
 				Produto produto = ProdutoMapper.input(null, dto, fornecedorOptional.get());
 				produtoRepository.save(produto);
 				
-//				Chamar a criação do estoque aqui
+				estoqueFeign.save(new EstoqueRecord(null, produto.getId(), BigDecimal.ZERO, BigDecimal.ZERO));
 				
 				return new ResponseEntity<>(HttpStatus.OK);
 			}

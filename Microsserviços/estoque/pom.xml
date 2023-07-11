@@ -9,9 +9,9 @@
 		<relativePath/>
 	</parent>
 	<groupId>br.tcc</groupId>
-	<artifactId>fornecedor</artifactId>
+	<artifactId>estoque</artifactId>
 	<version>0.0.1-SNAPSHOT</version>
-	<name>fornecedor</name>
+	<name>estoque</name>
 	<description>Projeto de gerenciador de estoque na arquitetura microsserviços</description>
 	<url>https://github.com/Eduardo-Karpinski/TCC</url>
 	<inceptionYear>2023</inceptionYear>
@@ -19,6 +19,7 @@
 		<java.version>17</java.version>
 		<project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
 		<project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+		<spring-cloud.version>2022.0.3</spring-cloud.version>
 	</properties>
 	<developers>
 		<developer>
@@ -42,6 +43,10 @@
 			<artifactId>spring-boot-starter-web</artifactId>
 		</dependency>
 		<dependency>
+		    <groupId>org.springframework.cloud</groupId>
+		    <artifactId>spring-cloud-starter-openfeign</artifactId>
+		</dependency>
+		<dependency>
 			<groupId>org.springframework.boot</groupId>
 			<artifactId>spring-boot-devtools</artifactId>
 			<scope>runtime</scope>
@@ -58,6 +63,17 @@
 			<scope>test</scope>
 		</dependency>
 	</dependencies>
+	<dependencyManagement>
+		<dependencies>
+			<dependency>
+				<groupId>org.springframework.cloud</groupId>
+				<artifactId>spring-cloud-dependencies</artifactId>
+				<version>${spring-cloud.version}</version>
+				<type>pom</type>
+				<scope>import</scope>
+			</dependency>
+		</dependencies>
+	</dependencyManagement>
 	<build>
 		<plugins>
 			<plugin>

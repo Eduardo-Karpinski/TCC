@@ -49,6 +49,7 @@ classDiagram
         -Long id
         -Produto produto
         -BigDecimal quantidade
+        -BigDecimal preco
     }
 
 ```
