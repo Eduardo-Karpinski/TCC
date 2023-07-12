@@ -13,6 +13,6 @@ public interface EstoqueRepository extends JpaRepository<Estoque, Long> {
 
 	Optional<Estoque> findByProduto(Produto produto);
 	@Query("select e from Estoque e where e.quantidade <= e.quantidadeMinima")
-	Optional<List<Estoque>> findAllEstoqueBaixos();
+	Optional<List<Estoque>> findAllEstoqueBaixo();
 	
 }

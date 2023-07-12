@@ -116,4 +116,12 @@ public class ProdutoService {
 		}
 	}
 
+	public ResponseEntity<Object> getAllByValorBaixo() {
+		try {
+			return new ResponseEntity<>(produtoRepository.getAllByValorBaixo(), HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
 }

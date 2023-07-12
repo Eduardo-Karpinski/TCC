@@ -26,6 +26,11 @@ public class ProdutoController {
 		this.produtoService = produtoService;
 	}
 	
+	@GetMapping("/valorBaixo")
+	public ResponseEntity<Object> getAllByValorBaixo() {
+		return produtoService.getAllByValorBaixo();
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getById(@PathVariable final Long id) {
 		return produtoService.getById(id);

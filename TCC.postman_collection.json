@@ -24,12 +24,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/fornecedor",
-							"protocol": "http",
+							"raw": "{{url}}:{{fornecedorPort}}/fornecedor",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
+							"port": "{{fornecedorPort}}",
 							"path": [
 								"fornecedor"
 							]
@@ -52,12 +51,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8080/fornecedor/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{fornecedorPort}}/fornecedor/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
+							"port": "{{fornecedorPort}}",
 							"path": [
 								"fornecedor",
 								"1"
@@ -72,12 +70,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/fornecedor/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{fornecedorPort}}/fornecedor/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
+							"port": "{{fornecedorPort}}",
 							"path": [
 								"fornecedor",
 								"1"
@@ -92,12 +89,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/fornecedor?page=0&size=10&sort=id,ASC",
-							"protocol": "http",
+							"raw": "{{url}}:{{fornecedorPort}}/fornecedor?page=0&size=10&sort=id,ASC",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
+							"port": "{{fornecedorPort}}",
 							"path": [
 								"fornecedor"
 							],
@@ -125,12 +121,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8080/fornecedor/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{fornecedorPort}}/fornecedor/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8080",
+							"port": "{{fornecedorPort}}",
 							"path": [
 								"fornecedor",
 								"1"
@@ -159,12 +154,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/produto",
-							"protocol": "http",
+							"raw": "{{url}}:{{produtoPort}}/produto",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8081",
+							"port": "{{produtoPort}}",
 							"path": [
 								"produto"
 							]
@@ -187,15 +181,14 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8081/produto/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{produtoPort}}/produto/1 ",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8081",
+							"port": "{{produtoPort}}",
 							"path": [
 								"produto",
-								"1"
+								"1 "
 							]
 						}
 					},
@@ -207,12 +200,11 @@
 						"method": "DELETE",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/produto/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{produtoPort}}/produto/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8081",
+							"port": "{{produtoPort}}",
 							"path": [
 								"produto",
 								"1"
@@ -227,12 +219,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/produto?page=0&size=10&sort=id,ASC",
-							"protocol": "http",
+							"raw": "{{url}}:{{produtoPort}}/produto?page=0&size=10&sort=id,ASC",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8081",
+							"port": "{{produtoPort}}",
 							"path": [
 								"produto"
 							],
@@ -260,12 +251,11 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "http://localhost:8081/produto/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{produtoPort}}/produto/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8081",
+							"port": "{{produtoPort}}",
 							"path": [
 								"produto",
 								"1"
@@ -277,7 +267,7 @@
 			]
 		},
 		{
-			"name": "estoque",
+			"name": "Estoque",
 			"item": [
 				{
 					"name": "update",
@@ -294,12 +284,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/estoque/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{estoquePort}}/estoque/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8082",
+							"port": "{{estoquePort}}",
 							"path": [
 								"estoque",
 								"1"
@@ -326,12 +315,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/estoque?page=0&size=10&sort=id,ASC",
-							"protocol": "http",
+							"raw": "{{url}}:{{estoquePort}}/estoque?page=0&size=10&sort=id,ASC",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8082",
+							"port": "{{estoquePort}}",
 							"path": [
 								"estoque"
 							],
@@ -371,12 +359,11 @@
 							}
 						},
 						"url": {
-							"raw": "http://localhost:8082/estoque/1",
-							"protocol": "http",
+							"raw": "{{url}}:{{estoquePort}}/estoque/1",
 							"host": [
-								"localhost"
+								"{{url}}"
 							],
-							"port": "8082",
+							"port": "{{estoquePort}}",
 							"path": [
 								"estoque",
 								"1"
@@ -386,6 +373,235 @@
 					"response": []
 				}
 			]
+		},
+		{
+			"name": "Venda",
+			"item": [
+				{
+					"name": "save",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "add produto",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda/1/1/50",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda",
+								"1",
+								"1",
+								"50"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "finaliza",
+					"request": {
+						"method": "POST",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}3/venda/finaliza/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}3",
+							"path": [
+								"venda",
+								"finaliza",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "delete",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "remove produto",
+					"request": {
+						"method": "DELETE",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda",
+								"1"
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get (list)",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda?page=0&size=10&sort=id,ASC",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda"
+							],
+							"query": [
+								{
+									"key": "page",
+									"value": "0"
+								},
+								{
+									"key": "size",
+									"value": "10"
+								},
+								{
+									"key": "sort",
+									"value": "id,ASC"
+								}
+							]
+						}
+					},
+					"response": []
+				},
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{vendaPort}}/venda/1",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{vendaPort}}",
+							"path": [
+								"venda",
+								"1"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		},
+		{
+			"name": "Relatorio",
+			"item": [
+				{
+					"name": "get",
+					"request": {
+						"method": "GET",
+						"header": [],
+						"url": {
+							"raw": "{{url}}:{{relatorioPort}}/relatorio/2023-07-12T00:00:00/2023-07-12T23:59:59",
+							"host": [
+								"{{url}}"
+							],
+							"port": "{{relatorioPort}}",
+							"path": [
+								"relatorio",
+								"2023-07-12T00:00:00",
+								"2023-07-12T23:59:59"
+							]
+						}
+					},
+					"response": []
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "url",
+			"value": "http://localhost"
+		},
+		{
+			"key": "fornecedorPort",
+			"value": "8080",
+			"type": "string"
+		},
+		{
+			"key": "produtoPort",
+			"value": "8081",
+			"type": "string"
+		},
+		{
+			"key": "estoquePort",
+			"value": "8082",
+			"type": "string"
+		},
+		{
+			"key": "vendaPort",
+			"value": "8083",
+			"type": "string"
+		},
+		{
+			"key": "relatorioPort",
+			"value": "8084",
+			"type": "string"
 		}
 	]
 }

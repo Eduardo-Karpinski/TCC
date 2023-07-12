@@ -1,5 +1,6 @@
 package br.tcc.estoque.service;
 
+import java.math.BigDecimal;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -93,6 +94,41 @@ public class EstoqueService {
 			Estoque estoque = EstoqueMapper.input(null, dto, produtoOptional.get());
 			estoqueRepository.save(estoque);
 			return new ResponseEntity<>(HttpStatus.OK);			
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
+	public ResponseEntity<Object> atualizaEstoque(final Long idProduto, final BigDecimal quantidade) {
+		try {
+			
+			Optional<Produto> produtoOptional = produtoFeign.findById(idProduto);
+			
+			if (produtoOptional.isEmpty()) {
+				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
+						new NoSuchElementException("No such Produto found"));
+			}
+			
+			Optional<Estoque> estoqueOptional = estoqueRepository.findByProduto(produtoOptional.get());
+			
+			if (estoqueOptional.isEmpty()) {
+				return ExceptionMessage.returnError(HttpStatus.BAD_REQUEST,
+						new NoSuchElementException("No such Estoque found"));
+			}
+			
+			Estoque estoque = estoqueOptional.get();
+			estoque.setQuantidade(estoque.getQuantidade().subtract(quantidade));
+			estoqueRepository.save(estoque);
+			
+			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
+	public ResponseEntity<Object> findAllEstoqueBaixo() {
+		try {
+			return new ResponseEntity<>(estoqueRepository.findAllEstoqueBaixos(), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
 		}

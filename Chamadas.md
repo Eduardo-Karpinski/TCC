@@ -50,3 +50,15 @@ Exemplo do body
     "quantidadeMinima": 5
 }
 ```
+
+# Venda
+### http://localhost:8083/venda (POST)
+### http://localhost:8083/venda/{id}/{idProduto}/{quantidade} (POST)
+### http://localhost:8083/venda/finaliza/{id} (POST)
+### http://localhost:8083/venda/{id} (DELETE)
+### http://localhost:8083/venda/produto/{id}/{idProduto} (DELETE)
+### http://localhost:8083/venda?page=0&size=10&sort=id,ASC (GET)
+### http://localhost:8083/venda/{id} (GET)
+
+# Relatorio
+### http://localhost:8084/relatorio/2023-07-12T00:00:00/2023-07-12T23:59:59 (GET)

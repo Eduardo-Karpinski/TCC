@@ -1,4 +1,4 @@
-package br.tcc.monolitico.service;
+package br.tcc.relatorio.service;
 
 import java.math.BigDecimal;
 import java.text.NumberFormat;
@@ -12,35 +12,35 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
 
-import br.tcc.monolitico.domain.Estoque;
-import br.tcc.monolitico.domain.Produto;
-import br.tcc.monolitico.domain.Venda;
-import br.tcc.monolitico.domain.VendaProduto;
-import br.tcc.monolitico.repository.EstoqueRepository;
-import br.tcc.monolitico.repository.ProdutoRepository;
-import br.tcc.monolitico.repository.VendaRepository;
-import br.tcc.monolitico.util.ExceptionMessage;
+import br.tcc.relatorio.domain.Estoque;
+import br.tcc.relatorio.domain.Produto;
+import br.tcc.relatorio.domain.Venda;
+import br.tcc.relatorio.domain.VendaProduto;
+import br.tcc.relatorio.feign.EstoqueFeign;
+import br.tcc.relatorio.feign.ProdutoFeign;
+import br.tcc.relatorio.feign.VendaFeign;
+import br.tcc.relatorio.util.ExceptionMessage;
 
 @Service
 public class RelatorioService {
 
-	public EstoqueRepository estoqueRepository;
-	public VendaRepository vendaRepository;
-	public ProdutoRepository produtoRepository;
+	public EstoqueFeign estoqueFeign;
+	public VendaFeign vendaFeign;
+	public ProdutoFeign produtoFeign;
 	
-	public RelatorioService(EstoqueRepository estoqueRepository, VendaRepository vendaRepository, ProdutoRepository produtoRepository) {
-		this.estoqueRepository = estoqueRepository;
-		this.vendaRepository = vendaRepository;
-		this.produtoRepository = produtoRepository;
+	public RelatorioService(EstoqueFeign estoqueFeign, VendaFeign vendaFeign, ProdutoFeign produtoFeign) {
+		this.estoqueFeign = estoqueFeign;
+		this.vendaFeign = vendaFeign;
+		this.produtoFeign = produtoFeign;
 	}
 	
 	@SuppressWarnings("unchecked")
 	public ResponseEntity<Object> getRelatorio(final LocalDateTime data1, final LocalDateTime data2) {
 		try {
 			JSONObject json = new JSONObject();
-			Optional<List<Venda>> vendaOptional = vendaRepository.findAllByIsFinalizadaTrueAndDataBetween(data1, data2);
-			Optional<List<Estoque>> estoqueOptional = estoqueRepository.findAllEstoqueBaixo();
-			Optional<List<Produto>> produtoOptional = produtoRepository.getAllByValorBaixo();
+			Optional<List<Venda>> vendaOptional = vendaFeign.findAllByIsFinalizadaTrueAndDataBetween(data1.toString(), data2.toString());
+			Optional<List<Estoque>> estoqueOptional = estoqueFeign.findAllEstoqueBaixo();
+			Optional<List<Produto>> produtoOptional = produtoFeign.getAllByValorBaixo();
 			
 			if (vendaOptional.isPresent()) {
 				json.put("totalDeVendas", vendaOptional.get().stream().count());

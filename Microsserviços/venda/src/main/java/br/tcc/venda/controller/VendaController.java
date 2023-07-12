@@ -1,6 +1,7 @@
 package br.tcc.venda.controller;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
@@ -22,6 +23,11 @@ public class VendaController {
 	
 	public VendaController(VendaService vendaService) {
 		this.vendaService = vendaService;
+	}
+	
+	@GetMapping("/{data1}/{data2}")
+	public ResponseEntity<Object> findAllByIsFinalizadaTrueAndDataBetween(@PathVariable final LocalDateTime data1, @PathVariable final LocalDateTime data2) {
+		return vendaService.findAllByIsFinalizadaTrueAndDataBetween(data1, data2);
 	}
 	
 	@PostMapping("/finaliza/{id}")

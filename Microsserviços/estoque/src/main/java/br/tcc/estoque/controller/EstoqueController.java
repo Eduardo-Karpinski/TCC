@@ -1,5 +1,7 @@
 package br.tcc.estoque.controller;
 
+import java.math.BigDecimal;
+
 import org.springframework.data.domain.Pageable;
 import org.springframework.data.web.PageableDefault;
 import org.springframework.http.ResponseEntity;
@@ -24,7 +26,17 @@ public class EstoqueController {
 	public EstoqueController(EstoqueService estoqueService) {
 		this.estoqueService = estoqueService;
 	}
+	
+	@GetMapping("/estoqueBaixo")
+	public ResponseEntity<Object> findAllEstoqueBaixo() {
+		return estoqueService.findAllEstoqueBaixo();
+	}
 
+	@PutMapping("/{idProduto}/{quantidade}")
+	public ResponseEntity<Object> getByProduto(@PathVariable final Long idProduto, @PathVariable final BigDecimal quantidade) {
+		return estoqueService.atualizaEstoque(idProduto, quantidade);
+	}
+	
 	@GetMapping("{id}")
 	public ResponseEntity<Object> getById(@PathVariable final Long id) {
 		return estoqueService.getById(id);

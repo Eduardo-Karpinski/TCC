@@ -1,6 +1,7 @@
 package br.tcc.venda.service;
 
 import java.math.BigDecimal;
+import java.time.LocalDateTime;
 import java.util.NoSuchElementException;
 import java.util.Optional;
 import java.util.stream.Collectors;
@@ -51,12 +52,7 @@ public class VendaService {
 			vendaRepository.save(vendaOptional.get());
 			
 			vendaOptional.get().getProdutos().forEach(p -> {
-//				precisa atualizar estoque
-//				Optional<Estoque> estoqueOptional = estoqueRepository.findByProduto(p.getProduto());
-//				if (estoqueOptional.isPresent()) {
-//					estoqueOptional.get().setQuantidade(estoqueOptional.get().getQuantidade().subtract(p.getQuantidade()));
-//					estoqueRepository.save(estoqueOptional.get());
-//				}
+				estoqueFeign.atualizaEstoque(p.getProduto().getId(), p.getQuantidade());
 			});
 			
 			return new ResponseEntity<>(HttpStatus.OK);
@@ -166,6 +162,14 @@ public class VendaService {
 			Venda venda = new Venda();
 			vendaRepository.save(venda);
 			return new ResponseEntity<>(HttpStatus.OK);
+		} catch (Exception e) {
+			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+		}
+	}
+
+	public ResponseEntity<Object> findAllByIsFinalizadaTrueAndDataBetween(LocalDateTime data1, LocalDateTime data2) {
+		try {
+			return new ResponseEntity<>(vendaRepository.findAllByIsFinalizadaTrueAndDataBetween(data1, data2), HttpStatus.OK);
 		} catch (Exception e) {
 			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
 		}
