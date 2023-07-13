@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.tcc</groupId>
 	<artifactId>monolitico</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>monolitico</name>
 	<description>Projeto de gerenciador de estoque na arquitetura monólitica</description>
 	<url>https://github.com/Eduardo-Karpinski/TCC</url>

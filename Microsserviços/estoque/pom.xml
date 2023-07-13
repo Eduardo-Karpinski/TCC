@@ -10,7 +10,7 @@
 	</parent>
 	<groupId>br.tcc</groupId>
 	<artifactId>estoque</artifactId>
-	<version>0.0.1-SNAPSHOT</version>
+	<version>1.0.0</version>
 	<name>estoque</name>
 	<description>Projeto de gerenciador de estoque na arquitetura microsserviços</description>
 	<url>https://github.com/Eduardo-Karpinski/TCC</url>
