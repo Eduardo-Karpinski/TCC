@@ -6,11 +6,13 @@ import java.time.LocalDateTime;
 import java.util.List;
 import java.util.Optional;
 
-import org.json.simple.JSONArray;
-import org.json.simple.JSONObject;
 import org.springframework.http.HttpStatus;
-import org.springframework.http.ResponseEntity;
 import org.springframework.stereotype.Service;
+import org.springframework.web.servlet.ModelAndView;
+
+import com.fasterxml.jackson.databind.ObjectMapper;
+import com.fasterxml.jackson.databind.node.ArrayNode;
+import com.fasterxml.jackson.databind.node.ObjectNode;
 
 import br.tcc.monolitico.domain.Estoque;
 import br.tcc.monolitico.domain.Produto;
@@ -19,7 +21,6 @@ import br.tcc.monolitico.domain.VendaProduto;
 import br.tcc.monolitico.repository.EstoqueRepository;
 import br.tcc.monolitico.repository.ProdutoRepository;
 import br.tcc.monolitico.repository.VendaRepository;
-import br.tcc.monolitico.util.ExceptionMessage;
 
 @Service
 public class RelatorioService {
@@ -34,22 +35,28 @@ public class RelatorioService {
 		this.produtoRepository = produtoRepository;
 	}
 	
-	@SuppressWarnings("unchecked")
-	public ResponseEntity<Object> getRelatorio(final LocalDateTime data1, final LocalDateTime data2) {
+	public ModelAndView getRelatorio(final LocalDateTime data1, final LocalDateTime data2) {
 		try {
-			JSONObject json = new JSONObject();
+			
+			ModelAndView modelAndView = new ModelAndView("relatorio");
+			
+			ObjectMapper objectMapper = new ObjectMapper();
+			ObjectNode objectNode = objectMapper.createObjectNode();
+			
 			Optional<List<Venda>> vendaOptional = vendaRepository.findAllByIsFinalizadaTrueAndDataBetween(data1, data2);
 			Optional<List<Estoque>> estoqueOptional = estoqueRepository.findAllEstoqueBaixo();
 			Optional<List<Produto>> produtoOptional = produtoRepository.getAllByValorBaixo();
 			
+			NumberFormat numberFormat = NumberFormat.getCurrencyInstance();
+			
 			if (vendaOptional.isPresent()) {
-				json.put("totalDeVendas", vendaOptional.get().stream().count());
-				json.put("valorVendido", NumberFormat.getCurrencyInstance().format(vendaOptional.get().stream()
+				objectNode.put("totalDeVendas", vendaOptional.get().stream().count());
+				objectNode.put("valorVendido", numberFormat.format(vendaOptional.get().stream()
 						.map(Venda::getProdutos)
 						.flatMap(produtos -> produtos.stream())
 						.map(produto -> produto.getPreco().multiply(produto.getQuantidade()))
 						.reduce(BigDecimal.ZERO, BigDecimal::add)));
-				json.put("quantidadeDeProdutosVendidos", vendaOptional.get().stream()
+				objectNode.put("quantidadeDeProdutosVendidos", vendaOptional.get().stream()
 						.map(Venda::getProdutos)
 						.flatMap(produtos -> produtos.stream())
 						.map(VendaProduto::getQuantidade)
@@ -57,32 +64,36 @@ public class RelatorioService {
 			}
 			
 			if (estoqueOptional.isPresent()) {
-				JSONArray estoquesBaixos = new JSONArray();
+				ArrayNode estoquesBaixos = objectMapper.createArrayNode();
 				estoqueOptional.get().forEach(estoque -> {
-					JSONObject estoqueJson = new JSONObject();
-					estoqueJson.put("Produto", estoque.getProduto().getDescricao() + " ("+estoque.getProduto().getEan()+")");
+					ObjectNode estoqueJson = objectMapper.createObjectNode();
+					estoqueJson.put("produto", estoque.getProduto().getDescricao() + " ("+estoque.getProduto().getEan()+")");
 					estoqueJson.put("quantidade", estoque.getQuantidade());
 					estoqueJson.put("quantidadeMinima", estoque.getQuantidadeMinima());
 					estoquesBaixos.add(estoqueJson);
 				});
-				json.put("estoquesBaixos", estoquesBaixos);
+				objectNode.set("estoquesBaixos", estoquesBaixos);
 			}
 			
 			if (produtoOptional.isPresent()) {
-				JSONArray estoquesBaixos = new JSONArray();
+				ArrayNode estoquesBaixos = objectMapper.createArrayNode();
 				produtoOptional.get().forEach(produto -> {
-					JSONObject produtoJson = new JSONObject();
-					produtoJson.put("Produto", produto.getDescricao() + " ("+produto.getEan()+")");
-					produtoJson.put("Preço", produto.getPreco());
-					produtoJson.put("Custo", produto.getCusto());
+					ObjectNode produtoJson = objectMapper.createObjectNode();
+					produtoJson.put("produto", produto.getDescricao() + " ("+produto.getEan()+")");
+					produtoJson.put("preco", numberFormat.format(produto.getPreco()));
+					produtoJson.put("custo", numberFormat.format(produto.getCusto()));
 					estoquesBaixos.add(produtoJson);
 				});
-				json.put("ProdutoComPreçoBaixo", estoquesBaixos);
+				objectNode.set("produtosComPrecoBaixo", estoquesBaixos);
 			}
 			
-			return new ResponseEntity<>(json, HttpStatus.OK);
+			String json = objectMapper.writeValueAsString(objectNode);
+			modelAndView.addObject("data", json);
+			return modelAndView;
 		} catch (Exception e) {
-			return ExceptionMessage.returnError(HttpStatus.INTERNAL_SERVER_ERROR, e);
+			e.printStackTrace();
+			ModelAndView modelAndView = new ModelAndView(null, HttpStatus.INTERNAL_SERVER_ERROR);
+			return modelAndView;
 		}
 	}
 	

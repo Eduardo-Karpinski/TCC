@@ -536,15 +536,15 @@
 						"method": "GET",
 						"header": [],
 						"url": {
-							"raw": "{{url}}:{{relatorioPort}}/relatorio/2023-07-12T00:00:00/2023-07-12T23:59:59",
+							"raw": "{{url}}:{{relatorioPort}}/relatorio/2023-07-17T00:00:00/2023-07-18T23:59:59",
 							"host": [
 								"{{url}}"
 							],
 							"port": "{{relatorioPort}}",
 							"path": [
 								"relatorio",
-								"2023-07-12T00:00:00",
-								"2023-07-12T23:59:59"
+								"2023-07-17T00:00:00",
+								"2023-07-18T23:59:59"
 							]
 						}
 					},
