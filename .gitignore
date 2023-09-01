@@ -33,3 +33,5 @@ replay_pid*
 */bin
 */.mvn/wrapper/maven-wrapper.properties
 Monolitico/.mvn/wrapper/maven-wrapper.jar
+**/*__pycache__
+**/*vscode
