@@ -1,2 +1,2 @@
 # TCC
-Este repositório contém o código-fonte e os arquivos relacionados ao meu Trabalho de Conclusão de Curso (TCC) na área de Engenharia de Software. O TCC tem como objetivo realizar um estudo comparativo de arquiteturas de software para um sistema de gerenciamento de estoque.
+Bem-vindo ao repositório do projeto de TCC intitulado "Análise do Desempenho de Arquitetura de Microsserviços em Ambiente Java e Python". Este projeto tem como objetivo explorar e avaliar o desempenho de sistemas baseados em microsserviços implementados nas linguagens de programação Java e Python.
