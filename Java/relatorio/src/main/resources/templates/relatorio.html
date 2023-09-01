@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+	<meta charset="utf-8">
+	<meta http-equiv="X-UA-Compatible" content="IE=edge">
+	<meta name="viewport" content="width=device-width,initial-scale=1.0">
+	<title>Relatório</title>
+	<link rel="stylesheet" href="/assets/bootstrap.min.css">
+	<link rel="stylesheet" href="/assets/style.css">
+</head>
+
+<body class="theme-green">
+	<div id="body">
+		<div id="content">
+			<div class="container my-4">
+				<div class="card mx-1">
+					<div class="card-body">
+						<div class="row align-items-center mx-0">
+							<div class="w-max-content text-center px-2 pt-1 d-none d-lg-block">
+								<img src="/assets/icon.png" class="img-fluid logo mb-1"><span
+									class="d-block text-center my-0">Relatórios</span>
+							</div>
+							<div class="col-12 text-center px-2 pt-1 mb-2 d-block d-lg-none">
+								<img src="/assets/icon.png" class="img-fluid logo mb-1">
+								<i class="far fa-angle-right font-21 color-theme mx-2"></i>
+								<span class="text-center my-0 font-17">Relatórios</span>
+							</div>
+							<div class="w-max-content px-2 d-none d-lg-block">
+								<i class="far fa-angle-right font-21 color-theme mr-3"></i>
+							</div>
+							<div class="col-lg mb-2 mb-lg-0 text-center text-lg-left">
+								<span class="d-block font-13 color-theme weight-500"><i
+										class="far fa-money-bill-wave-alt mr-1"></i> Valor vendido:</span>
+								<span id="valorVendido" class="d-block font-19"></span>
+							</div>
+							<div class="col-6 col-lg text-center text-lg-left">
+								<span class="d-block font-13 color-theme weight-500"><i class="far fa-box mr-1"></i>
+									Quantidade de vendas:</span>
+								<span id="totalDeVenda" class="d-block font-19"></span>
+							</div>
+							<div class="col-6 col-lg text-center text-lg-left">
+								<span class="d-block font-13 color-theme weight-500"><i class="far fa-carrot mr-1"></i>
+									Produtos vendidos:</span>
+								<span id="quantidadeVendida" class="d-block font-19"></span>
+							</div>
+						</div>
+					</div>
+				</div>
+				<div class="row clearfix m-0">
+					<div class="col-lg-6 px-1">
+						<div class="card">
+							<div class="card-body">
+								<div class="row align-items-center mx-0 mb-2">
+									<div class="w-max-content text-center px-2 pt-1 d-none d-lg-block">
+										<img src="/assets/low-percent.png" class="img-fluid logo">
+									</div>
+									<div class="col px-2">
+										<i class="far fa-angle-right font-21 color-theme mr-2"></i>
+										<span class="text-center my-0 font-17">Valor inferior a taxa de 20%</span>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table id="tabelaProduto" class="table table-hover table-custom spacing5 mb-0">
+										<thead>
+											<tr class="color-theme">
+												<th></th>
+												<th>Produto</th>
+												<th class="text-center">Preço</th>
+												<th class="text-center">Custo</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+
+					<div class="col-lg-6 px-1">
+						<div class="card">
+							<div class="card-body">
+								<div class="row align-items-center mx-0 mb-2">
+									<div class="w-max-content text-center px-2 pt-1 d-none d-lg-block">
+										<img src="/assets/low-box.png" class="img-fluid logo">
+									</div>
+									<div class="col px-2">
+										<i class="far fa-angle-right font-21 color-theme mr-2"></i>
+										<span class="text-center my-0 font-17">Estoque baixo</span>
+									</div>
+								</div>
+								<div class="table-responsive">
+									<table id="tabelaEstoque" class="table table-hover table-custom spacing5 mb-0">
+										<thead>
+											<tr class="color-theme">
+												<th></th>
+												<th>Produto</th>
+												<th class="text-center">Quantidade</th>
+												<th class="text-center">Quant. Mínima</th>
+											</tr>
+										</thead>
+									</table>
+								</div>
+							</div>
+						</div>
+					</div>
+				</div>
+			</div>
+		</div>
+	</div>
+
+	<script th:inline="javascript">
+
+		const data = JSON.parse([[${data}]])
+
+		document.getElementById('totalDeVenda').innerHTML = data.totalDeVendas
+		document.getElementById('valorVendido').innerHTML = data.valorVendido
+		document.getElementById('quantidadeVendida').innerHTML = data.quantidadeDeProdutosVendidos
+
+		data.produtosComPrecoBaixo.forEach(dataproduto => {
+			const tabela = document.getElementById('tabelaProduto')
+			const linha = tabela.insertRow(tabela.rows.length)
+			const celula1 = linha.insertCell(0)
+			const celula2 = linha.insertCell(1)
+			const celula3 = linha.insertCell(2)
+			const celula4 = linha.insertCell(3)
+			celula1.innerHTML = `<td class="w60"><img src="/assets/box.png" class="avatar rounded"></td>`
+			celula2.innerHTML = dataproduto.produto
+			celula3.innerHTML = dataproduto.preco
+			celula4.innerHTML = dataproduto.custo
+		})
+
+		data.estoquesBaixos.forEach(estoque => {
+			const tabela = document.getElementById('tabelaEstoque')
+			const linha = tabela.insertRow(tabela.rows.length)
+			const celula1 = linha.insertCell(0)
+			const celula2 = linha.insertCell(1)
+			const celula3 = linha.insertCell(2)
+			const celula4 = linha.insertCell(3)
+			celula1.innerHTML = `<td class="w60"><img src="/assets/box.png" class="avatar rounded"></td>`
+			celula2.innerHTML = estoque.produto
+			celula3.innerHTML = estoque.quantidade
+			celula4.innerHTML = estoque.quantidadeMinima
+		})
+
+	</script>
+</body>
+</html>
