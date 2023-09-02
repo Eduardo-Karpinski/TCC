@@ -1,19 +1,85 @@
 from repository.FornecedorRepository import Fornecedor;
 from repository import FornecedorRepository
+from sqlalchemy import asc, desc
+from fastapi.responses import JSONResponse
+from dto.FornecedorDTO import FornecedorDTO;
+from fastapi import HTTPException
 
 def getById(id: int):
 	Session = FornecedorRepository.getSession()
 	with Session() as session:
-			return session.query(Fornecedor).filter_by(id=id).first()
+		
+		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
+  
+		if not fornecedor:
+			raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
+     
+		return JSONResponse(content=fornecedor.to_dict(), status_code=200)
 	
-def get():
-	return None
+def get(page: int, size: int, sort: str):
+	Session = FornecedorRepository.getSession()
+	split = sort.split(",")
 
-def delete():
-	return None
+	with Session() as session:
+		orderBy = asc(split[0].strip()) if split[1].strip().lower() == "asc" else desc(split[0].strip())
 
-def update():
-	return None
+		fornecedores = session.query(Fornecedor) \
+                              .order_by(orderBy) \
+                              .offset(page * size) \
+                              .limit(size) \
+                              .all()
 
-def save():
-	return None
+		if not fornecedores:
+			raise HTTPException(status_code=404, detail="Nenhum fornecedor encontrado")
+
+		return JSONResponse(content=[fornecedor.to_dict() for fornecedor in fornecedores], status_code=200)
+	    
+def delete(id: int):
+	Session = FornecedorRepository.getSession()
+	with Session() as session:
+		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
+
+		if not fornecedor:
+			raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
+     
+		try:
+			session.delete(fornecedor)
+			session.commit()
+			return JSONResponse(content=None, status_code=200)
+		except Exception as e:
+			session.rollback()
+			raise HTTPException(status_code=500, detail=str(e))
+
+def update(id: int, fornecedorDTO: FornecedorDTO):
+    
+	Session = FornecedorRepository.getSession()
+	with Session() as session:
+    
+		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
+
+		if not fornecedor:
+			raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
+
+		try:
+			for attr, value in fornecedorDTO.model_dump().items():
+				setattr(fornecedor, attr, value)
+
+			session.commit()
+
+			return JSONResponse(content=None, status_code=200)
+		except Exception as e:
+			session.rollback()
+			raise HTTPException(status_code=500, detail=str(e))
+
+def save(fornecedorDTO: FornecedorDTO):
+
+	Session = FornecedorRepository.getSession()
+	with Session() as session:
+		try:
+			fornecedor = Fornecedor(**fornecedorDTO.model_dump())
+			session.add(fornecedor)
+			session.commit()
+			return JSONResponse(content=None, status_code=200)
+		except Exception as e:
+			session.rollback()
+			raise HTTPException(status_code=500, detail=str(e))

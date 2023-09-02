@@ -1,21 +1,25 @@
 from fastapi import APIRouter
 from service import FornecedorService
+from dto.FornecedorDTO import FornecedorDTO;
 
 router = APIRouter()
-path = "/fornecedor/"
 
-@router.get(path+"{id}")
+@router.get("/{id}")
 def getById(id: int):
 	return FornecedorService.getById(id)
 
-def get():
-	return None
+@router.get("")
+def get(page: int = 0, size: int = 10, sort: str = "id,ASC"):
+	return FornecedorService.get(page, size, sort)
 
-def delete():
-	return None
+@router.delete("/{id}")
+def delete(id: int):
+	return FornecedorService.delete(id)
 
-def update():
-	return None
+@router.put("/{id}")
+def update(id: int, fornecedorDTO: FornecedorDTO):
+	return FornecedorService.update(id, fornecedorDTO)
 
-def save():
-	return None
+@router.post("")
+def save(fornecedorDTO: FornecedorDTO):
+	return FornecedorService.save(fornecedorDTO)

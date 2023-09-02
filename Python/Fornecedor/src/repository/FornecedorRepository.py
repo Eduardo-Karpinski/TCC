@@ -17,6 +17,20 @@ class Fornecedor(Base):
     bairro = Column(String(100), nullable=False)
     municipio = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
+    
+    def to_dict(self):
+        return {
+            "id": self.id,
+            "nome": self.nome,
+            "cnpj": self.cnpj,
+            "telefone": self.telefone,
+            "cep": self.cep,
+            "endereco": self.endereco,
+            "complemento": self.complemento,
+            "bairro": self.bairro,
+            "municipio": self.municipio,
+            "estado": self.estado
+        }
 
 def createDataBase():
     Base.metadata.create_all(engine)
