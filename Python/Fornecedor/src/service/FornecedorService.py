@@ -14,7 +14,7 @@ def getById(id: int):
 		if not fornecedor:
 			raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
      
-		return JSONResponse(content=fornecedor.to_dict(), status_code=200)
+		return JSONResponse(content=fornecedor.toDict(), status_code=200)
 	
 def get(page: int, size: int, sort: str):
 	Session = FornecedorRepository.getSession()
@@ -32,7 +32,7 @@ def get(page: int, size: int, sort: str):
 		if not fornecedores:
 			raise HTTPException(status_code=404, detail="Nenhum fornecedor encontrado")
 
-		return JSONResponse(content=[fornecedor.to_dict() for fornecedor in fornecedores], status_code=200)
+		return JSONResponse(content=[fornecedor.toDict() for fornecedor in fornecedores], status_code=200)
 	    
 def delete(id: int):
 	Session = FornecedorRepository.getSession()

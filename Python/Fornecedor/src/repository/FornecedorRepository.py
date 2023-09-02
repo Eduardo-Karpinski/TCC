@@ -18,7 +18,7 @@ class Fornecedor(Base):
     municipio = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
     
-    def to_dict(self):
+    def toDict(self):
         return {
             "id": self.id,
             "nome": self.nome,
