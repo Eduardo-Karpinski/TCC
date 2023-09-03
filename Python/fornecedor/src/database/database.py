@@ -3,9 +3,9 @@ from sqlalchemy.ext.declarative import declarative_base
 from sqlalchemy.orm import sessionmaker, declarative_base
 
 engine = create_engine("mysql+pymysql://root:root@127.0.0.1/python")
-Base = declarative_base()
+base = declarative_base()
 
-class Fornecedor(Base):
+class Fornecedor(base):
     __tablename__ = "fornecedor"
     id = Column(Integer, primary_key=True)
     nome = Column(String(100), nullable=False)
@@ -18,7 +18,7 @@ class Fornecedor(Base):
     municipio = Column(String(100), nullable=False)
     estado = Column(String(100), nullable=False)
     
-    def toDict(self):
+    def to_dict(self):
         return {
             "id": self.id,
             "nome": self.nome,
@@ -32,8 +32,8 @@ class Fornecedor(Base):
             "estado": self.estado
         }
 
-def createDataBase():
-    Base.metadata.create_all(engine)
+def create_data_base():
+    base.metadata.create_all(engine)
 
-def getSession():
+def get_session():
     return sessionmaker(bind=engine)

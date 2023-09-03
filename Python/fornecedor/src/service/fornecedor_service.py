@@ -1,12 +1,12 @@
-from repository.FornecedorRepository import Fornecedor;
-from repository import FornecedorRepository
+from database.database import Fornecedor;
+from database import database
 from sqlalchemy import asc, desc
 from fastapi.responses import JSONResponse
-from dto.FornecedorDTO import FornecedorDTO;
+from dto.fornecedor_DTO import FornecedorDTO;
 from fastapi import HTTPException
 
-def getById(id: int):
-	Session = FornecedorRepository.getSession()
+def get_by_id(id: int):
+	Session = database.get_session()
 	with Session() as session:
 		
 		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
@@ -14,10 +14,10 @@ def getById(id: int):
 		if not fornecedor:
 			raise HTTPException(status_code=404, detail="Fornecedor não encontrado")
      
-		return JSONResponse(content=fornecedor.toDict(), status_code=200)
+		return JSONResponse(content=fornecedor.to_dict(), status_code=200)
 	
 def get(page: int, size: int, sort: str):
-	Session = FornecedorRepository.getSession()
+	Session = database.get_session()
 	split = sort.split(",")
 
 	with Session() as session:
@@ -32,10 +32,10 @@ def get(page: int, size: int, sort: str):
 		if not fornecedores:
 			raise HTTPException(status_code=404, detail="Nenhum fornecedor encontrado")
 
-		return JSONResponse(content=[fornecedor.toDict() for fornecedor in fornecedores], status_code=200)
+		return JSONResponse(content=[fornecedor.to_dict() for fornecedor in fornecedores], status_code=200)
 	    
 def delete(id: int):
-	Session = FornecedorRepository.getSession()
+	Session = database.get_session()
 	with Session() as session:
 		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
 
@@ -52,7 +52,7 @@ def delete(id: int):
 
 def update(id: int, fornecedorDTO: FornecedorDTO):
     
-	Session = FornecedorRepository.getSession()
+	Session = database.get_session()
 	with Session() as session:
     
 		fornecedor = session.query(Fornecedor).filter_by(id=id).first()
@@ -73,7 +73,7 @@ def update(id: int, fornecedorDTO: FornecedorDTO):
 
 def save(fornecedorDTO: FornecedorDTO):
 
-	Session = FornecedorRepository.getSession()
+	Session = database.get_session()
 	with Session() as session:
 		try:
 			fornecedor = Fornecedor(**fornecedorDTO.model_dump())
