@@ -2,7 +2,7 @@ from database.database import Fornecedor;
 from database import database
 from sqlalchemy import asc, desc
 from fastapi.responses import JSONResponse
-from dto.fornecedor_DTO import FornecedorDTO;
+from dto.fornecedor_DTO import FornecedorDTO
 from fastapi import HTTPException
 
 def get_by_id(id: int):
@@ -51,7 +51,6 @@ def delete(id: int):
 			raise HTTPException(status_code=500, detail=str(e))
 
 def update(id: int, fornecedorDTO: FornecedorDTO):
-    
 	Session = database.get_session()
 	with Session() as session:
     
@@ -72,7 +71,6 @@ def update(id: int, fornecedorDTO: FornecedorDTO):
 			raise HTTPException(status_code=500, detail=str(e))
 
 def save(fornecedorDTO: FornecedorDTO):
-
 	Session = database.get_session()
 	with Session() as session:
 		try:

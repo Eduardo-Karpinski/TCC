@@ -33,7 +33,7 @@ public class EstoqueController {
 	}
 
 	@PutMapping("/{idProduto}/{quantidade}")
-	public ResponseEntity<Object> getByProduto(@PathVariable final Long idProduto, @PathVariable final BigDecimal quantidade) {
+	public ResponseEntity<Object> atualizaEstoque(@PathVariable final Long idProduto, @PathVariable final BigDecimal quantidade) {
 		return estoqueService.atualizaEstoque(idProduto, quantidade);
 	}
 	
