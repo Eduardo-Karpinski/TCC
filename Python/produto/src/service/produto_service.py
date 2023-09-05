@@ -20,7 +20,7 @@ def get_by_id(id: int):
   
 		if not produto:
 			raise HTTPException(status_code=404, detail="Produto não encontrado")
-     
+
 		return JSONResponse(content=produto.to_dict(), status_code=200)
 
 def get(page: int, size: int, sort: str):
@@ -31,10 +31,10 @@ def get(page: int, size: int, sort: str):
 		orderBy = asc(split[0].strip()) if split[1].strip().lower() == "asc" else desc(split[0].strip())
 
 		produtos = session.query(Produto) \
-                              .order_by(orderBy) \
-                              .offset(page * size) \
-                              .limit(size) \
-                              .all()
+						  .order_by(orderBy) \
+						  .offset(page * size) \
+						  .limit(size) \
+						  .all()
 
 		if not produtos:
 			raise HTTPException(status_code=404, detail="Nenhum produto encontrado")
@@ -48,7 +48,7 @@ def delete(id: int):
 
 		if not produto:
 			raise HTTPException(status_code=404, detail="Produto não encontrado")
-     
+
 		try:
 			session.delete(produto)
 			session.commit()
@@ -60,7 +60,7 @@ def delete(id: int):
 def update(id: int, produtoDTO: ProdutoDTO):
 	Session = database.get_session()
 	with Session() as session:
-    
+
 		produto = session.query(Produto).filter_by(id=id).first()
 
 		if not produto:
@@ -79,7 +79,7 @@ def update(id: int, produtoDTO: ProdutoDTO):
 
 def save(produtoDTO: ProdutoDTO):
 	response = requests.get(f"http://localhost:8080/fornecedor/{produtoDTO.fornecedor_id}")
-    
+
 	if response.status_code == 200:
 		Session = database.get_session()
 		with Session() as session:
@@ -89,12 +89,10 @@ def save(produtoDTO: ProdutoDTO):
 				session.commit()
 
 				estoque = {
-        			'produto_id': produto.id,
+					'produto_id': produto.id,
 					'quantidade': 0,
 					'quantidade_minima': 0
 				}
-
-				print("teste: ", estoque)
 
 				requests.post("http://localhost:8082/estoque", json=estoque)
 	
