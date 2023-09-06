@@ -17,7 +17,7 @@ def get_by_id(id: int):
 	with Session() as session:
 		
 		produto = session.query(Produto).filter_by(id=id).first()
-  
+
 		if not produto:
 			raise HTTPException(status_code=404, detail="Produto não encontrado")
 
@@ -31,10 +31,10 @@ def get(page: int, size: int, sort: str):
 		orderBy = asc(split[0].strip()) if split[1].strip().lower() == "asc" else desc(split[0].strip())
 
 		produtos = session.query(Produto) \
-						  .order_by(orderBy) \
-						  .offset(page * size) \
-						  .limit(size) \
-						  .all()
+						.order_by(orderBy) \
+						.offset(page * size) \
+						.limit(size) \
+						.all()
 
 		if not produtos:
 			raise HTTPException(status_code=404, detail="Nenhum produto encontrado")

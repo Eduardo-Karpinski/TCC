@@ -8,7 +8,7 @@ from sqlalchemy import asc, desc
 import requests
 
 def find_all_estoque_baixo():
-    
+
     Session = database.get_session()
     with Session() as session:
     

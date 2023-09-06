@@ -6,7 +6,7 @@ router = APIRouter()
 
 @router.get("/valorBaixo")
 def get_all_by_valor_baixo():
-    return produto_service.get_all_by_valor_baixo()
+	return produto_service.get_all_by_valor_baixo()
 
 @router.get("/{id}")
 def get_by_id(id: int):

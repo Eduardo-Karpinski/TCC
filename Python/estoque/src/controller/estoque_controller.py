@@ -7,11 +7,11 @@ router = APIRouter()
 
 @router.get("/estoqueBaixo")
 def find_all_estoque_baixo():
-    return estoque_service.find_all_estoque_baixo()
+	return estoque_service.find_all_estoque_baixo()
 
 @router.put("/{produto_id}/{quantidade}")
 def atualiza_estoque(produto_id: int, quantidade: Decimal):
-    return estoque_service.atualiza_estoque(produto_id, quantidade)
+	return estoque_service.atualiza_estoque(produto_id, quantidade)
 
 @router.get("/{id}")
 def get_by_id(id: int):
