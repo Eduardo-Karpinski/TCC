@@ -75,15 +75,15 @@ public class RelatorioService {
 			}
 			
 			if (produtoOptional.isPresent()) {
-				ArrayNode estoquesBaixos = objectMapper.createArrayNode();
+				ArrayNode produtosComPrecoBaixo = objectMapper.createArrayNode();
 				produtoOptional.get().forEach(produto -> {
 					ObjectNode produtoJson = objectMapper.createObjectNode();
 					produtoJson.put("produto", produto.getDescricao() + " ("+produto.getEan()+")");
 					produtoJson.put("preco", numberFormat.format(produto.getPreco()));
 					produtoJson.put("custo", numberFormat.format(produto.getCusto()));
-					estoquesBaixos.add(produtoJson);
+					produtosComPrecoBaixo.add(produtoJson);
 				});
-				objectNode.set("produtosComPrecoBaixo", estoquesBaixos);
+				objectNode.set("produtosComPrecoBaixo", produtosComPrecoBaixo);
 			}
 			
 			String json = objectMapper.writeValueAsString(objectNode);

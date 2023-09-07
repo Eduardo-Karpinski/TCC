@@ -18,7 +18,8 @@ class Estoque(base):
             "id": self.id,
             "produto_id": self.produto_id,
             "quantidade": float(self.quantidade),
-            "quantidade_minima": float(self.quantidade_minima)
+            "quantidade_minima": float(self.quantidade_minima),
+            "produto": self.produto.to_dict()
         }
 
 class Produto(base):
